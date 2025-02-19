@@ -2,8 +2,9 @@ import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 import EmojiPicker from "emoji-picker-react";
 
+const socket = useMemo(() => io(import.meta.env.VITE_BACKEND_URL), []);
+
 const App = () => {
-  const socket = useMemo(() => io("http://localhost:3000"), []);
   const [message, setMessage] = useState("");
   const [room, setRoom] = useState("");
   const [messages, setMessages] = useState([]);
@@ -14,10 +15,11 @@ const App = () => {
     socket.on("receive-message", (data) => {
       setMessages((prev) => [...prev, data]);
     });
+
     return () => {
       socket.off("receive-message");
     };
-  }, [socket]);
+  }, []);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
