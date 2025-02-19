@@ -2,9 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { io } from "socket.io-client";
 import EmojiPicker from "emoji-picker-react";
 
-const socket = useMemo(() => io(import.meta.env.VITE_BACKEND_URL), []);
+
 
 const App = () => {
+  const socket = useMemo(() => io("https://chat-backend-n3ur.onrender.com"), []);
   const [message, setMessage] = useState("");
   const [room, setRoom] = useState("");
   const [messages, setMessages] = useState([]);
